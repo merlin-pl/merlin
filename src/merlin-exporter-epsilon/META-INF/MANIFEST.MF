@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Epsilon
+Bundle-SymbolicName: merlin-exporter-epsilon;singleton:=true
+Bundle-Version: 2.0.0
+Bundle-Activator: merlin.exporter.epsilon.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.emf.ecore,
+ org.eclipse.ocl.ecore,
+ org.eclipse.epsilon.eol.engine;bundle-version="1.5.1",
+ org.eclipse.epsilon.etl.engine;bundle-version="1.5.1",
+ org.eclipse.epsilon.egl.engine;bundle-version="1.5.1",
+ merlin-common;bundle-version="2.0.0",
+ merlin-concepts;bundle-version="2.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy

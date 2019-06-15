@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+    <extension point="org.eclipse.core.expressions.definitions">
+		<definition id="merlin.isecore">
+			<adapt type="org.eclipse.core.resources.IResource">
+         		<test property="org.eclipse.core.resources.extension" value="ecore" />
+         	</adapt>
+         </definition>
+	</extension>
+
+   <extension point="org.eclipse.ui.handlers">
+      <handler
+            class="merlin.analysis.validate.ui.handlers.SyntacticValidationHandler"
+            commandId="merlin.commands.validateEcoreSyntax">
+      </handler>
+      <!--
+      <handler
+            class="merlin.validate.ui.handlers.SemanticValidationHandler"
+            commandId="merlin.commands.validateEcoreSemantics">
+      </handler>
+      -->
+      <handler
+            class="merlin.analysis.validate.ui.handlers.PropertyAnalysisHandler"
+            commandId="merlin.commands.analyse-properties">
+      </handler>
+      <handler
+            class="merlin.analysis.validate.ui.handlers.TransformationAnalysisHandler"
+            commandId="merlin.commands.analyseTransformations">
+      </handler>
+   </extension>
+   
+   <extension point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="true"
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <menu
+               icon="icons/wand.png"
+               id="merlin.menus"
+               label="Merlin"
+               mnemonic="M">
+      		<category
+            	id="merlin.commands.category"
+            	name="Merlin Category">
+      		</category>            
+      		<command
+      		      categoryId="merlin.commands.category"
+                  commandId="merlin.commands.validateEcoreSyntax"
+                  id="merlin.menus.validateEcoreSyntax"
+                  label="Validate Ecore syntax">
+				<visibleWhen checkEnabled="false">
+					<iterate>
+						<reference definitionId="merlin.isecore" />
+					</iterate>		
+				</visibleWhen>  
+            </command>
+            <!--
+            <command
+            	  categoryId="merlin.commands.category"
+                  commandId="merlin.commands.validateEcoreSemantics"
+                  id="merlin.menus.validateEcoreSemantics"
+                  label="Validate Ecore (semantics)">
+				<visibleWhen checkEnabled="false">
+					<iterate>
+						<reference definitionId="merlin.isecore" />
+					</iterate>		
+				</visibleWhen>  
+            </command>
+            -->
+            <command
+            	  categoryId="merlin.commands.category"
+                  commandId="merlin.commands.analyse-properties"
+                  id="merlin.menus.analyse-properties"
+                  label="Analyse model properties">
+				<visibleWhen checkEnabled="false">
+					<iterate>
+						<reference definitionId="merlin.isecore" />
+					</iterate>		
+				</visibleWhen>  
+            </command>
+            <command
+                  commandId="merlin.commands.analyseTransformations"
+                  id="merlin.menus.analyseTransformations"
+                  label="Analyse transformations">
+               <visibleWhen
+                     checkEnabled="false">
+                  <iterate>
+                     <reference
+                           definitionId="merlin.isecore">
+                     </reference>
+                  </iterate>
+               </visibleWhen>
+            </command>
+            <separator name="merlin.menus.separator1" visible="true"></separator>
+            <separator name="merlin.menus.separator2" visible="true"></separator>
+         </menu>
+      </menuContribution>
+   </extension>
+  
+   <extension
+		id="merlin.marker.problem"
+		name="150-Metamodel Problem"
+		point="org.eclipse.core.resources.markers">
+		<super type="org.eclipse.core.resources.problemmarker"/>
+		<persistent value="true"/>
+   </extension>
+   
+</plugin>

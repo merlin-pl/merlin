@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension point="org.eclipse.ui.handlers">
+      <handler
+            class="merlin.compare.handlers.ObtainClosestProductHandler"
+            commandId="merlin-compare.commands.closestProduct">
+      </handler>
+   </extension>
+   
+   <extension point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="true"
+            locationURI="popup:merlin.menus?after=merlin.menus.separator1">
+            <command
+                  categoryId="merlin.commands.category"
+                  commandId="merlin-compare.commands.closestProduct"
+                  id="merlin-compare.menus.closestProduct"
+                  label="Obtain closest product">
+				<visibleWhen checkEnabled="false">
+					<iterate>
+						<reference definitionId="merlin.isecore" />
+					</iterate>		
+				</visibleWhen> 
+            </command>
+      </menuContribution>
+   </extension>
+
+</plugin>

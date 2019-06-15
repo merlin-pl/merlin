@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension point="org.eclipse.ui.handlers">
+      <handler
+            class="merlin.concepts.handlers.GenerateConceptHandler"
+            commandId="merlin-concepts.commands.generateConcept">
+      </handler>
+      <handler
+            class="merlin.concepts.handlers.ExportHandler"
+            commandId="merlin-concepts.commands.export">
+      </handler>
+   </extension>
+
+      <extension point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="true"
+            locationURI="popup:merlin.menus?after=merlin.menus.separator1">
+            <command
+                  categoryId="merlin.commands.category"
+                  commandId="merlin-concepts.commands.generateConcept"
+                  id="merlin-concepts.commands.generateConcept"
+                  label="Generate concept">
+				<visibleWhen checkEnabled="false">
+					<iterate>
+						<reference definitionId="merlin.isecore" />
+					</iterate>		
+				</visibleWhen>  
+            </command>
+            <command
+                  categoryId="merlin.commands.category"
+                  commandId="merlin-concepts.commands.export"
+                  id="merlin-concepts.commands.export"
+                  label="Export product">
+               <visibleWhen
+                     checkEnabled="false">
+                  <iterate>
+                     <reference
+                           definitionId="merlin.isecore">
+                     </reference>
+                  </iterate>
+               </visibleWhen>
+            </command>
+      </menuContribution>
+   </extension>
+
+</plugin>

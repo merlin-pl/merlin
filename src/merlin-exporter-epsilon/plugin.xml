@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="merlin-common.exporter">
+      <exporter
+            logic="merlin.exporter.epsilon.EOLExporter">
+      </exporter>
+      <exporter
+            logic="merlin.exporter.epsilon.ETLExporter">
+      </exporter>
+      <exporter
+            logic="merlin.exporter.epsilon.EGLExporter">
+      </exporter>
+   </extension>
+
+</plugin>
