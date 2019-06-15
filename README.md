@@ -3,8 +3,9 @@
 <a href="http://miso.es/tools/merlin/ for further">Merlin</a> is an Eclipse plugin 
 to build and analyse product lines of mde artefacts (meta-models, model transformations...). 
 It extends <a href="http://www.featureide.com/">FeatureIDE</a>
-to create feature models and build product lines of meta-models. 
-It supports the creation and analysis of transformation product lines 
+to create feature models and build product lines of meta-models,
+which can be analysed based on the <a href="https://sourceforge.net/projects/useocl/">Use Validator</a>. 
+It also supports the creation and analysis of transformation product lines 
 defined with the <a href="https://www.eclipse.org/epsilon/">Epsilon</a>
 model management languages.
 
