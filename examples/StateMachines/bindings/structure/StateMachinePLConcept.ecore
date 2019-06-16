@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    name="statemachine" nsURI="http://StateMachine.org/PLconcept" nsPrefix="smpl">
+  <eClassifiers xsi:type="ecore:EClass" name="FSM">
+    <eOperations name="states" ordered="false" lowerBound="1" upperBound="-1" eType="#//State">
+      <eAnnotations source="presence">
+        <details key="source" value="structure"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="transitions" ordered="false" upperBound="-1" eType="#//Transition">
+      <eAnnotations source="presence">
+        <details key="source" value="structure"/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="State"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Transition">
+    <eOperations name="src" lowerBound="1" eType="#//State">
+      <eAnnotations source="presence">
+        <details key="source" value="structure"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="tar" lowerBound="1" eType="#//State">
+      <eAnnotations source="presence">
+        <details key="source" value="structure"/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers>
+</ecore:EPackage>

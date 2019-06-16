@@ -1,0 +1,10 @@
+-- @concept = "../StateMachineTraverserConcept.ecore"
+-- @presence = "Executable"
+
+$post self.states()->includesAll(_result)
+operation FSM initials() : Set(State) {
+   var res : Set(State) := new Set(State);
+   res.addAll(self.states().select(s | s.isTypeOf(Initial)));
+   return res.asSet();
+}
+

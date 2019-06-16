@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+    <feature automatic="selected" name="Automata"/>
+    <feature automatic="selected" name="Transitions"/>
+    <feature automatic="selected" name="Memory"/>
+    <feature automatic="selected" name="States"/>
+    <feature automatic="selected" name="AcceptanceCondition"/>
+    <feature manual="selected" name="Finite"/>
+    <feature automatic="unselected" name="Infinite"/>
+    <feature automatic="unselected" name="Probabilistic"/>
+    <feature automatic="selected" name="Shape"/>
+</configuration>

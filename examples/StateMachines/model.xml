@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel>
+		<properties/>
+		<struct>
+			<and mandatory="true" name="StateMachines">
+				<feature name="Hierarchical"/>
+				<feature name="Executable"/>
+				<feature name="Timed"/>
+			</and>
+		</struct>
+		<constraints>
+			<rule>
+				<imp>
+					<var>Timed</var>
+					<conj>
+						<var>Executable</var>
+						<var>Hierarchical</var>
+					</conj>
+				</imp>
+			</rule>
+		</constraints>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true" Tautology="true"/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

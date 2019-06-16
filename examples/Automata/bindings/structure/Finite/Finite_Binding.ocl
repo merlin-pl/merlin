@@ -1,0 +1,8 @@
+-- @presenceCondition = Infinite
+import 'http://Automata/PL'
+
+package autopl
+context Automaton::acceptanceCondition() : AcceptanceKind
+body : AcceptanceKind::Infinite
+
+endpackage

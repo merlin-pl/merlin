@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="autopl" nsURI="http://Automata/PLconcept" nsPrefix="autopl">
+  <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+    <details key="invocationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="Automaton">
+    <eOperations name="acceptanceCondition" lowerBound="1" eType="#//AcceptanceKind"/>
+    <eOperations name="states" ordered="false" upperBound="-1" eType="#//State">
+      <eAnnotations source="maple">
+        <details key="source" value="structure"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="transitions" ordered="false" upperBound="-1" eType="#//Transition">
+      <eAnnotations source="maple">
+        <details key="source" value="structure"/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="AcceptanceKind" serializable="false">
+    <eLiterals name="Finite"/>
+    <eLiterals name="Infinite"/>
+    <eLiterals name="Probabilistic"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Alphabet">
+    <eOperations name="symbols" ordered="false" upperBound="-1" eType="#//Symbol">
+      <eAnnotations source="maple">
+        <details key="source" value="structure"/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Symbol">
+    <eOperations name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="maple">
+        <details key="source" value="structure"/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Transition">
+    <eOperations name="from" lowerBound="1" eType="#//State">
+      <eAnnotations source="maple">
+        <details key="source" value="structure"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="to" lowerBound="1" eType="#//State">
+      <eAnnotations source="maple">
+        <details key="source" value="structure"/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="State">
+    <eOperations name="outTrans" ordered="false" upperBound="-1" eType="#//Transition">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="body" value="Transition.allInstances()->select( t | t.from() = self)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="false"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="maple">
+        <details key="source" value="structure"/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers>
+</ecore:EPackage>

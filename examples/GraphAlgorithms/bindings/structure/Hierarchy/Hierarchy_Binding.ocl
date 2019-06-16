@@ -1,0 +1,14 @@
+-- @presenceCondition = Undirected
+import 'http://Graphs/PL'
+
+package graphs
+context Node
+	-- @Merge union
+	def: outputs() : Set(Node) =
+	CompositeNode.allInstances()->select(cn | cn.subGraph.nodes()->includes(self))->collect(outputs())->flatten()->asSet()
+
+	-- @Merge union
+	def: inputs() : Set(Node) =
+	CompositeNode.allInstances()->select(cn | cn.subGraph.nodes()->includes(self))->collect(inputs())->flatten()->asSet()
+
+endpackage

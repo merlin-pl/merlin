@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel>
+		<properties/>
+		<struct>
+			<and abstract="true" mandatory="true" name="DDBBSchema">
+				<alt mandatory="true" name="Types">
+					<feature name="Closed"/>
+					<feature name="OpenSimple"/>
+					<feature name="OpenObject"/>
+				</alt>
+				<and mandatory="true" name="Data">
+					<feature name="Content"/>
+				</and>
+				<and mandatory="true" name="Keys">
+					<feature name="Foreign"/>
+					<feature name="Primary"/>
+				</and>
+			</and>
+		</struct>
+		<constraints/>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true" Tautology="true"/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

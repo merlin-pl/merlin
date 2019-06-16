@@ -1,0 +1,18 @@
+@namespace(
+	uri="http://StateMachine.org/PL",
+	prefix="smpl")
+package statemachine;
+
+class FSM{
+	val State[1..*] states;
+	val Transition[*] transitions;
+}
+
+class State {
+	
+}
+
+class Transition {
+	
+}
+

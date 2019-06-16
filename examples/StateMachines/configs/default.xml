@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<configuration>
+		<feature automatic="selected" manual="undefined" name="StateMachines"/>
+		<feature automatic="undefined" manual="selected" name="Hierarchical"/>
+		<feature automatic="selected" manual="undefined" name="Executable"/>
+		<feature automatic="undefined" manual="selected" name="Timed"/>
+	</configuration>

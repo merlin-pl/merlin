@@ -1,0 +1,76 @@
+PetriNet.all()->first().reduce();
+
+operation PetriNet reduce() {
+	('Reducing the Petri net').println();
+	var executed : Boolean := true;
+	while (executed) 
+		executed:=self.fusionSeriesPlaces();
+	
+	executed := true;
+	while (executed) 
+		executed:=self.fusionSeriesTransitions();
+}
+
+operation PetriNet fusionSeriesPlaces() : Boolean {
+	var matches = self.fusionSerialPlaceSelect();
+	if (matches.size()=0) return false;
+	t = matches.random();
+	self.fusionSerialPlaceExec(t);
+	return true;
+}
+
+@Merge intersection
+operation PetriNet fusionSeriesPlacesSelect() : Set(Transition) {
+	return Transition.allInstances()->select( t | t.ins().size()=1 and t.outs().size()=1);
+}
+
+operation PetriNet fusionSeriesPlacesExec(tr : Transition ) {
+	var inPlace = tr.ins().first;
+	var outPlace = tr.outs().first;
+	// We remove outPlace: we need to redirect each incoming and ourgoing arc from/to outPlace to inPlace
+	var inTrans  = inPlace.inTransitions();
+	var outTrans = outPlace.outTransitions();
+	
+	// What do we do with tokens?
+	inTrans.modify(outPlace.tokens());	// IF modify is found to be a recurring operation, move to structural concept
+	
+	delete tr;
+	delete outPlace;
+	
+	for (t in inTrans) t.outs().add(inPlace);
+	for (t in outTrans) t.ins().add(inPlace);
+}
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+operation PetriNet fusionSeriesTransitions() : Boolean {
+	var matches = self.fusionSeriesTransitionsSelect();
+	if (matches.size()=0) return false;
+	t = matches.random();
+	self.fusionSeriesTransitionsExec(t);
+	return true;
+}
+
+@Merge intersection
+operation PetriNet fusionSeriesTransitionsSelect() : Set(Place) {
+	return Places.allInstances()->select( p | p.inTransitions().size()=1 and t.outTransitions().size()=1);
+}
+
+operation Place inTransitions() : Set(Transition) {
+	return Transition.allInstances()->select( t | t.outs()->includes(self));
+}
+
+operation Place outTransitions() : Set(Transition) {
+	return Transition.allInstances()->select( t | t.ins()->includes(self));
+}
+
+operation PetriNet fusionSeriesTransitionsExec(pl : Place ) {
+	var inTransition = tr.inTransitions().first;
+	var outTransition = tr.outTransitions().first;
+	// We remove outPlace: we need to redirect each incoming and ourgoing arc from/to outPlace to inPlace
+	var inPlaces   = inTransition.ins();
+	var outPlaces  = outTransition.outs();
+		
+	delete pl;
+	delete outTransition;
+	
+	inTransition.outs().addAll(outPlaces);
+}

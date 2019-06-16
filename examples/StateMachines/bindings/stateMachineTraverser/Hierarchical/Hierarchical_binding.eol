@@ -1,0 +1,8 @@
+-- @concept = "../StateMachineTraverserConcept.ecore"
+-- @presence = "Hierarchical"
+
+operation State adjacent() : Set(State) {
+   var res := Transition.all.select(t | t.src() = self).collect(t | t.tar());
+   res.addAll(self.nested);
+   return res.asSet();
+}

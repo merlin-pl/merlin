@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="StateMachineTraverser" nsURI="http://www.statemachine.org/concepttrav"
+    nsPrefix="traverser">
+  <eAnnotations source="transformation">
+    <details key="technology" value="EOL"/>
+    <details key="name" value="SMTraverser.eol"/>
+  </eAnnotations>
+  <eAnnotations source="http://www.eclipse.org/OCL/Import">
+    <details key="smpl" value="../structure/StateMachinePLConcept.ecore#/"/>
+  </eAnnotations>
+  <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+    <details key="invocationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="FSM" eSuperTypes="../structure/StateMachinePLConcept.ecore#//FSM">
+    <eOperations name="traverse"/>
+    <eOperations name="initials" ordered="false" upperBound="-1" eType="#//State">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="post_coherentChoice" value="self.states()->includesAll(self.initials())"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="false"/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="State" eSuperTypes="../structure/StateMachinePLConcept.ecore#//State">
+    <eOperations name="adjacent" ordered="false" upperBound="-1" eType="#//State">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="false"/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers>
+</ecore:EPackage>

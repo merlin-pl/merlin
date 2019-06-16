@@ -1,0 +1,19 @@
+-- @presenceCondition = true
+import 'http://www.petrinets.org/'
+
+package PetriNets
+context PetriNet
+
+   def: places() : Set(Place) = 
+    self.places->asSet()
+   def: trans() : Set(Transition) = 
+    self.trans->asSet()
+context Place
+
+   def: net() : PetriNet = 
+    self.net
+context Transition
+
+   def: net() : PetriNet = 
+    self.net
+endpackage

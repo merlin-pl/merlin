@@ -1,0 +1,13 @@
+-- @concept = 'concept/PetriNetsSimulationConcept.ecore'
+-- @presenceCondition = Inhibitor and Bounded
+import 'http://www.petrinets.org/'
+
+package PetriNets
+context Transition
+
+   def: enabled() : Boolean =
+    self.inputs()->forAll( p | p.tokens() > 0) and
+       self.inh->forAll( p | p.tokens() = 0 ) and
+          self.outputs()->forAll( p | p.tokens() + self.outWeight(p) <= p.bound )
+    
+endpackage

@@ -1,0 +1,14 @@
+-- @concept = "concept/PetriNetsSimulationConcept.ecore"
+-- @presence = "Object"
+operation Place modify(t : Integer) {
+	if ( t < 0) {
+    	for ( i in Sequence{1..-t}) {
+    		self.ctokens.remove(self.ctokens.random());
+    	}
+    }
+    else if ( t > 0) {
+    	for ( i in Sequence{1..t}) {
+    		self.ctokens.add(new Token);
+    	}
+    }
+}

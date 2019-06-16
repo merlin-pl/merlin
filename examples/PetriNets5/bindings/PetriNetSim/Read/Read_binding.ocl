@@ -1,0 +1,9 @@
+import 'http://www.petrinets.org/'
+
+package PetriNets
+context Transition
+   -- @Merge and
+   def: enabled() : Boolean =
+       self.read->forAll( p | p.tokens() > 0 )
+    
+endpackage

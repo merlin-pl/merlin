@@ -1,0 +1,18 @@
+-- @presenceCondition = Undirected
+import 'http://Graphs/PL'
+
+package graphs
+
+context Node
+
+def: outputs() : Set(Node) =
+	Edge.allInstances()->
+		select( e | e.ends->includes(self) )->
+		collect(e|e.ends->excluding(self) )->
+		flatten()->
+		asSet()
+
+def: inputs() : Set(Node) =
+	self.outputs()
+
+endpackage

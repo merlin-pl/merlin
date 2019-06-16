@@ -1,0 +1,18 @@
+[% var s := Schema.all.first();%]
+[% if (s.isDefined()){%]
+CREATE DATABASE [%=s.name%]
+
+[% for (t in s.tables) { %]
+CREATE TABLE [%=t.name%]
+  	[% for ( c in t.columns) {%]
+[%=c.toStringCol()%]
+  	[% if (hasMore){%],[%}%]
+  		[%}%]
+  [%}%]
+[%}%]
+
+[%
+operation Column toStringCol() : String {
+   return self.name;
+}
+%]

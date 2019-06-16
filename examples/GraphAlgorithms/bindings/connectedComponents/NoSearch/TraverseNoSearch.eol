@@ -1,0 +1,10 @@
+operation Graph calculateFollowers(idx : Integer) {
+   if ( idx >= self.~toVisit.size()) return; // we reached the end
+   var current := self.~toVisit.at(idx);
+   for ( n in current.outputs()) {
+      if (not self.~toVisit.includes(n) ) {
+         self.~toVisit.add(n);
+         self.calculateFollowers(idx+1);
+      }
+   }
+} 

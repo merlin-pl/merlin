@@ -1,0 +1,11 @@
+-- @presenceCondition = not Weight
+import 'http://www.petrinets.org/'
+
+package PetriNets
+context Transition::inputs() : Set(Place) 
+	body: self.ins->asSet()
+    
+context Transition::outputs() : Set(Place)  
+    body: self.outs->asSet()
+    
+endpackage

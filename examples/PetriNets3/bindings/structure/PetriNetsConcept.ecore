@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    name="PetriNets" nsURI="http://www.petrinets.org/concept" nsPrefix="ex">
+  <eAnnotations source="http://www.eclipse.org/OCL/Import">
+    <details key="ecore" value="http://www.eclipse.org/emf/2002/Ecore"/>
+  </eAnnotations>
+  <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+    <details key="invocationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="PetriNet">
+    <eOperations name="places" ordered="false" upperBound="-1" eType="#//Place">
+      <eAnnotations source="presence">
+        <details key="source" value="structure"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="trans" ordered="false" upperBound="-1" eType="#//Transition">
+      <eAnnotations source="presence">
+        <details key="source" value="structure"/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Place">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="posTokens"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="posTokens" value="self.tokens() >= 0"/>
+    </eAnnotations>
+    <eOperations name="tokens" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eOperations name="net" lowerBound="1" eType="#//PetriNet">
+      <eAnnotations source="presence">
+        <details key="source" value="structure"/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Transition">
+    <eOperations name="net" lowerBound="1" eType="#//PetriNet">
+      <eAnnotations source="presence">
+        <details key="source" value="structure"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="ins" ordered="false" upperBound="-1" eType="#//Place">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="false"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="outs" ordered="false" upperBound="-1" eType="#//Place">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="false"/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers>
+</ecore:EPackage>

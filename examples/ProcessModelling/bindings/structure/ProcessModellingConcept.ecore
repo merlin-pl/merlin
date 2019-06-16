@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="processModels" nsURI="http://ProcessModelling/PLconcept" nsPrefix="gpl">
+  <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+    <details key="invocationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="ProcessModel">
+    <eOperations name="terminatingTasks" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
+    <eOperations name="nodes" ordered="false" upperBound="-1" eType="#//Node">
+      <eAnnotations source="maple">
+        <details key="source" value="structure"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="edges" ordered="false" upperBound="-1" eType="#//FlowEdge">
+      <eAnnotations source="maple">
+        <details key="source" value="structure"/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Node" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Task" eSuperTypes="#//Node">
+    <eOperations name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="maple">
+        <details key="source" value="structure"/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CompositeTask" eSuperTypes="#//Task">
+    <eAnnotations source="modifier">
+      <details key="extends" value="ProcessModel"/>
+      <details key="condition" value="Hierarchical"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FlowEdge">
+    <eOperations name="input" lowerBound="1" eType="#//Node">
+      <eAnnotations source="maple">
+        <details key="source" value="structure"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="output" lowerBound="1" eType="#//Node">
+      <eAnnotations source="maple">
+        <details key="source" value="structure"/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers>
+</ecore:EPackage>

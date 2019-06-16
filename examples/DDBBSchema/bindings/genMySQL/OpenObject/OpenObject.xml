@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<configuration>
+		<feature automatic="selected" manual="undefined" name="DDBBSchema"/>
+		<feature automatic="selected" manual="undefined" name="Types"/>
+		<feature automatic="unselected" manual="undefined" name="Closed"/>
+		<feature automatic="unselected" manual="undefined" name="OpenSimple"/>
+		<feature automatic="undefined" manual="selected" name="OpenObject"/>
+		<feature automatic="selected" manual="undefined" name="Data"/>
+		<feature automatic="undefined" manual="undefined" name="Content"/>
+		<feature automatic="selected" manual="undefined" name="Keys"/>
+		<feature automatic="undefined" manual="undefined" name="Foreign"/>
+		<feature automatic="undefined" manual="undefined" name="Primary"/>
+	</configuration>

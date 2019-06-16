@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel>
+		<properties/>
+		<struct>
+			<and abstract="true" mandatory="true" name="Automata">
+				<and mandatory="true" name="Transitions">
+					<feature name="Input"/>
+					<feature name="Output"/>
+					<feature name="Probability"/>
+					<feature name="Deterministic"/>
+				</and>
+				<and mandatory="true" name="Memory">
+					<feature name="Stack"/>
+					<and mandatory="true" name="States">
+						<and name="Initial">
+							<feature name="NoIncomingTrans"/>
+						</and>
+						<and name="Final">
+							<feature name="NoOutgoingTrans"/>
+						</and>
+						<feature name="Hierarchical"/>
+					</and>
+				</and>
+				<alt mandatory="true" name="AcceptanceCondition">
+					<feature name="Finite"/>
+					<feature name="Infinite"/>
+					<feature name="Probabilistic"/>
+				</alt>
+				<and mandatory="true" name="Shape">
+					<feature name="Connected"/>
+				</and>
+			</and>
+		</struct>
+		<constraints>
+			<rule>
+				<imp>
+					<var>Infinite</var>
+					<not>
+						<var>Final</var>
+					</not>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>Deterministic</var>
+					<var>Output</var>
+				</imp>
+			</rule>
+		</constraints>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true" Tautology="true"/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

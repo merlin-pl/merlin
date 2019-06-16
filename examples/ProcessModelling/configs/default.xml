@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<configuration>
+		<feature automatic="selected" manual="undefined" name="ProcessModelling"/>
+		<feature automatic="selected" manual="undefined" name="GatewayKinds"/>
+		<feature automatic="undefined" manual="undefined" name="ParallelSplit"/>
+		<feature automatic="undefined" manual="undefined" name="Synchronization"/>
+		<feature automatic="undefined" manual="undefined" name="SimpleMerge"/>
+		<feature automatic="undefined" manual="undefined" name="ExclusiveChoice"/>
+		<feature automatic="undefined" manual="undefined" name="MultiChoice"/>
+		<feature automatic="selected" manual="undefined" name="TaskKinds"/>
+		<feature automatic="selected" manual="selected" name="FinalTasks"/>
+		<feature automatic="undefined" manual="undefined" name="Terminating"/>
+		<feature automatic="selected" manual="undefined" name="FTCardinality"/>
+		<feature automatic="undefined" manual="selected" name="FTMandatory"/>
+		<feature automatic="unselected" manual="undefined" name="FTOptional"/>
+		<feature automatic="undefined" manual="selected" name="Hierarchical"/>
+		<feature automatic="selected" manual="selected" name="InitialTasks"/>
+		<feature automatic="selected" manual="undefined" name="ITCardinality"/>
+		<feature automatic="undefined" manual="selected" name="ITMandatory"/>
+		<feature automatic="unselected" manual="undefined" name="ITOptional"/>
+	</configuration>

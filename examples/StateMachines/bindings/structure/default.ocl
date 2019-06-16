@@ -1,0 +1,21 @@
+-- @presenceCondition = true
+import 'http://StateMachine.org/PL'
+
+package statemachine
+context FSM
+
+   def: states() : Set(State) = 
+    self.states
+
+   def: transitions() : Set(Transition) = 
+    self.transitions
+
+context Transition
+
+   def: src() : State = 
+    self.src
+
+   def: tar() : State = 
+    self.tar
+
+endpackage

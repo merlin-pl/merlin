@@ -1,0 +1,5 @@
+[%
+operation Column toStringCol() : String {
+   return self.name+' '+self.type.name;
+}
+%]

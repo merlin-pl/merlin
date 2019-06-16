@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<configuration>
+		<feature automatic="selected" manual="undefined" name="PetriNets"/>
+		<feature automatic="selected" manual="undefined" name="Tokens"/>
+		<feature automatic="undefined" manual="undefined" name="Simple"/>
+		<feature automatic="undefined" manual="undefined" name="Object"/>
+		<feature automatic="selected" manual="undefined" name="Arcs"/>
+		<feature automatic="undefined" manual="undefined" name="Weight"/>
+		<feature automatic="undefined" manual="selected" name="Inhibitor"/>
+		<feature automatic="undefined" manual="undefined" name="Read"/>
+		<feature automatic="selected" manual="undefined" name="Transitions"/>
+		<feature automatic="undefined" manual="undefined" name="Priority"/>
+		<feature automatic="selected" manual="undefined" name="Places"/>
+		<feature automatic="undefined" manual="selected" name="Bounded"/>
+	</configuration>

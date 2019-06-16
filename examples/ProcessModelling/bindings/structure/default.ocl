@@ -1,0 +1,26 @@
+-- @presenceCondition = true
+import 'http://ProcessModelling/PL'
+
+package processModels
+context ProcessModel
+
+   def: nodes() : Set(Node) = 
+    self.nodes
+
+   def: edges() : Set(FlowEdge) = 
+    self.edges
+
+context Task
+
+   def: name() : String = 
+    self.name
+
+context FlowEdge
+
+   def: input() : Node = 
+    self.input
+
+   def: output() : Node = 
+    self.output
+
+endpackage

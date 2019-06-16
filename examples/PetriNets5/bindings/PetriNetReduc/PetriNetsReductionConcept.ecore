@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="PetriNetReduc" nsURI="http://www.petrinets.org/reduction" nsPrefix="red">
+  <eAnnotations source="transformation">
+    <details key="technology" value="EOL"/>
+    <details key="name" value="PetriNetReduc.eol"/>
+  </eAnnotations>
+  <eAnnotations source="http://www.eclipse.org/OCL/Import">
+    <details key="ecore" value="http://www.eclipse.org/emf/2002/Ecore"/>
+    <details key="ex" value="../structure/PetriNetsConcept.ecore#/"/>
+  </eAnnotations>
+  <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+    <details key="invocationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="Place" eSuperTypes="../structure/PetriNetsConcept.ecore#//Place">
+    <eOperations name="modify" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="post_retTrue" value="true"/>
+        <details key="post_tokChange" value="self.tokens()@pre+t= self.tokens()"/>
+      </eAnnotations>
+      <eParameters name="t" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigInteger"/>
+    </eOperations>
+    <eOperations name="inTransitions" ordered="false" upperBound="-1" eType="ecore:EClass ../structure/PetriNetsConcept.ecore#//Transition">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="false"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="outTransitions" ordered="false" upperBound="-1" eType="ecore:EClass ../structure/PetriNetsConcept.ecore#//Transition">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="false"/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PetriNet" eSuperTypes="../structure/PetriNetsConcept.ecore#//PetriNet">
+    <eOperations name="reduce"/>
+    <eOperations name="fusionSeriesPlaces" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="post_nonEmpty" value="self.fusionSeriesPlaces() implies self.fusionSeriesPlacesSelect()@pre->notEmpty()"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="fusionSeriesPlacesSelect" ordered="false" upperBound="-1" eType="ecore:EClass ../structure/PetriNetsConcept.ecore#//Transition">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="false"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="fusionSeriesPlacesExec">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="pre_including" value="self.fusionSeriesPlacesSelect()->includes(tr)"/>
+      </eAnnotations>
+      <eParameters name="tr" lowerBound="1" eType="ecore:EClass ../structure/PetriNetsConcept.ecore#//Transition"/>
+    </eOperations>
+    <eOperations name="fusionSeriesTransitions" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="post_nonEmpty" value="self.fusionSeriesTransitions() implies self.fusionSeriesPlacesSelect()@pre->notEmpty()"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="fusionSeriesTransitionsSelect" ordered="false" upperBound="-1"
+        eType="ecore:EClass ../structure/PetriNetsConcept.ecore#//Place">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="false"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="fusionSeriesTransitionsExec">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="pre_including" value="self.fusionSeriesTransitionsSelect()->includes(pl)"/>
+      </eAnnotations>
+      <eParameters name="pl" lowerBound="1" eType="ecore:EClass ../structure/PetriNetsConcept.ecore#//Place"/>
+    </eOperations>
+  </eClassifiers>
+</ecore:EPackage>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+    <feature automatic="selected" name="DDBBSchema"/>
+    <feature automatic="selected" name="Types"/>
+    <feature automatic="unselected" name="Closed"/>
+    <feature automatic="unselected" name="OpenSimple"/>
+    <feature manual="selected" name="OpenObject"/>
+    <feature automatic="selected" name="Data"/>
+    <feature automatic="selected" name="Keys"/>
+</configuration>

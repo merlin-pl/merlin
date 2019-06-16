@@ -1,0 +1,31 @@
+-- @concept = "StateMachineTraverserConcept.ecore"
+
+FSM.all()->first().traverse();
+
+operation FSM traverse() {
+   for (s in self.initials()) {
+      print_traverse(s, new Set(State));
+   }
+}
+
+$post self.states()->includesAll(_result)
+operation FSM initials() : Set(State) {
+   var res : Set(State) := new Set(State);
+   res.add(self.states().random());
+   return res;
+}
+
+operation State adjacent() : Set(State) {
+   var res := Transition.all.select(t | t.src() = self).collect(t | t.tar());
+   return res.asSet();
+}
+
+operation print_traverse(s : State, visited : Set(State)) {
+	('State : '+s).println();
+	for (next in s.adjacent()) {
+		if (not visited.includes(next)) {
+		   visited.add(next);
+		   print_traverse(next, visited);
+		}
+	}
+}

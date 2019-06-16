@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ASCII"?>
+<rdpl:Schema
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:rdpl="http://RelationalDDBB/PL"
+    name="testing">
+  <tables name="table">
+    <columns
+        name="columnName"/>
+  </tables>
+</rdpl:Schema>

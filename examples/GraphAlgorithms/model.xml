@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<featureModel>
+    <properties/>
+    <struct>
+        <and mandatory="true" name="GraphAlgorithms">
+            <and mandatory="true" name="Edges">
+                <alt mandatory="true" name="Direction">
+                    <feature name="Directed"/>
+                    <feature name="Undirected"/>
+                </alt>
+                <feature name="Weights"/>
+                <feature name="Hyperedges"/>
+                <feature name="Parallel"/>
+            </and>
+            <and mandatory="true" name="Nodes">
+                <feature name="Hierarchy"/>
+                <feature name="Identified"/>
+            </and>
+            <alt mandatory="true" name="Search">
+                <feature name="DepthFirst"/>
+                <feature name="BreadthFirst"/>
+                <feature name="None"/>
+            </alt>
+        </and>
+    </struct>
+    <constraints/>
+    <calculations Auto="true" Constraints="true" Features="true" Redundant="true" Tautology="true"/>
+    <comments/>
+    <featureOrder userDefined="false"/>
+</featureModel>

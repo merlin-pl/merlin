@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="graphs" nsURI="http://Graphs/PLconcept" nsPrefix="gpl">
+  <eAnnotations source="http://www.eclipse.org/OCL/Import">
+    <details key="ecore" value="http://www.eclipse.org/emf/2002/Ecore"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="Graph">
+    <eOperations name="nodes" ordered="false" upperBound="-1" eType="#//Node">
+      <eAnnotations source="presence">
+        <details key="source" value="structure"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="edges" ordered="false" upperBound="-1" eType="#//Edge">
+      <eAnnotations source="presence">
+        <details key="source" value="structure"/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Node">
+    <eOperations name="outputs" ordered="false" upperBound="-1" eType="#//Node"/>
+    <eOperations name="inputs" ordered="false" upperBound="-1" eType="#//Node"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Edge"/>
+</ecore:EPackage>

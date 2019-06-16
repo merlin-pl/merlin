@@ -1,0 +1,11 @@
+-- @presenceCondition = Weight
+import 'http://www.petrinets.org/'
+
+package PetriNets
+context Transition::inputs() : Set(Place)  
+    body: ArcPT.allInstances()->select(a | a.to = self )->collect( a | a.from )->asSet()
+    
+context Transition::outputs() : Set(Place)  
+    body: ArcTP.allInstances()->select(a | a.from = self )->collect( a | a.to )->asSet()
+    
+endpackage

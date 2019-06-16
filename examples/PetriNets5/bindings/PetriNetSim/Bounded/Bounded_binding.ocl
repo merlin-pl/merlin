@@ -1,0 +1,12 @@
+-- @concept = 'concept/PetriNetsSimulationConcept.ecore'
+-- @presenceCondition = Bounded
+import 'http://www.petrinets.org/'
+
+package PetriNets
+context Transition
+
+   -- @Merge and
+   def: enabled() : Boolean =
+       self.outs()->forAll( p | p.tokens() < p.bound )
+    
+endpackage

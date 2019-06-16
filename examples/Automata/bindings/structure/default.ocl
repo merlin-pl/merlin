@@ -1,0 +1,36 @@
+-- @presenceCondition = true
+import 'http://Automata/PL'
+
+package autopl
+context Automaton
+
+   def: states() : Set(State) = 
+    self.states
+
+   def: transitions() : Set(Transition) = 
+    self.transitions
+
+context Alphabet
+
+   def: symbols() : Set(Symbol) = 
+    self.symbols
+
+context Symbol
+
+   def: name() : String = 
+    self.name
+
+context Transition
+
+   def: from() : State = 
+    self.from
+
+   def: to() : State = 
+    self.to
+
+context State
+
+   def: name() : String = 
+    self.name
+
+endpackage

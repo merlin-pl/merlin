@@ -1,0 +1,15 @@
+-- @concept = "concept/PetriNetsSimulationConcept.ecore"
+-- @presence = "Weight"
+operation Transition inWeight (p : Place) : Integer {
+   if (not self.inputs()->includes(p))  
+     	return 0; 
+     else
+     	return ArcPT.allInstances()->select(a | a.from = p and a.to = self)->first().weight;
+}
+
+operation Transition outWeight(p : Place) : Integer {
+     if (not self.outputs()->includes(p))  
+     	return 0; 
+     else
+     	return ArcTP.allInstances()->select(a | a.from = self and a.to = p)->first().weight;
+}

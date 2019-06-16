@@ -1,0 +1,13 @@
+rule TaskToPlace 
+  transform t : PM!Task
+  to p : PN!Place {
+    guard : not t.isKindOf(PM!InitialTask)
+  
+	p.tokens = 0;  
+}
+
+rule InitialTaskToPlace 
+  transform t : PM!InitialTask
+  to p : PN!Place {
+	p.tokens = 1;  
+}

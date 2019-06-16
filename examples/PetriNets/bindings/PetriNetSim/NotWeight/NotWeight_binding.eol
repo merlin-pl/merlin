@@ -1,0 +1,15 @@
+-- @concept = "concept/PetriNetsSimulationConcept.ecore"
+-- @presence = "Not Weight"
+operation Transition inWeight (p : Place) : Integer {
+   if (not self.inputs()->includes(p))  
+     	return 0; 
+     else
+     	return 1;
+}
+
+operation Transition outWeight(p : Place) : Integer {
+     if (not self.outputs()->includes(p))  
+     	return 0; 
+     else
+     	return 1;
+}

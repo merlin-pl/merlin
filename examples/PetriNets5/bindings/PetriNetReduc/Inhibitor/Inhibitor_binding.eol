@@ -1,0 +1,16 @@
+-- @concept = "concept/PetriNetsReductionConcept.ecore"
+-- @presence = "Inhibitor"
+@Merge intersection
+operation PetriNet fusionSeriesPlacesSelect() : Set(Transition) {
+	return Transition.allInstances()->select( t | t.inh->isEmpty())->
+			select(t | t.ins()->random().inh() = t.outs()->random().inh());	// because we know that ins and outs have size 1
+}
+
+operation Place inh() : Set(Transition) {
+	return Transition.allInstances()->select( t | t.inh->includes(self));
+}
+
+@Merge intersection
+operation PetriNet fusionSeriesTransitionsSelect() : Set(Place) {
+	return Place.allInstances()->select ( p | p.outTransitions()->random()->inh->isEmpty());	// empty set of inhibitor arcs
+}

@@ -1,0 +1,8 @@
+operation Node setId(id : Integer)  {
+   // We don't do anything
+}
+
+@override super
+operation Graph numerate() {
+   'Operation not available'.println();
+}

@@ -1,0 +1,56 @@
+
+Graph.all.first().numerate();
+
+operation Graph initialNode() : Node {
+   return self.nodes()->random();
+}
+
+operation Graph init(n : Node) {
+   self.~toVisit := Sequence{n};
+   self.~idx := 0;
+   self.calculateFollowers(0);
+}
+
+operation Graph next() : Node {
+   if (self.~idx < self.~toVisit.size()) {
+        self.~idx := self.~idx+1;
+   		return self.~toVisit.at(self.idx);
+   }
+   return null;
+}
+
+operation Graph enumerateReachable(nextNode : Node, number : Integer) {
+   while (nextNode<>null) {
+      nextNode.setId(number);
+      number := number + 1;
+      nextNode := self.next();
+   }
+}
+
+operation Graph unreachable(vst : Sequence(Node)) : Node {
+   for (n in self.nodes()) {
+      if (not vst.includes(n)) return n;
+   }
+   return null;
+}
+
+operation Graph calculateComponents()  {
+   // we need to check whether all nodes have been traversed!!
+   var number : Integer := 0; 
+   var nextNode : Node;
+   
+   ('Numbering '+self).println();
+   nextNode := self.initialNode();
+   self.init(nextNode);
+      
+   var allVisited := new Sequence(Node);
+   allVisited.addAll(self.~toVisit);
+      
+   while (nextNode <> null) {
+   		var cmp := new Component();
+   		self.components.add(cmp);
+   		cmp.addAll(self.~toVisit);
+   		   		
+   		nextNode := self.unreachable(visited);
+   }
+}

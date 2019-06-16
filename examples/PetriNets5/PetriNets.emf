@@ -1,0 +1,78 @@
+@maple(features="model.xml")
+@"http://www.eclipse.org/OCL/Import"(ecore="http://www.eclipse.org/emf/2002/Ecore")
+@Ecore(invocationDelegates="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot", settingDelegates="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot", validationDelegates="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot")
+@namespace(uri="http://www.petrinets.org/", prefix="ex")
+package PetriNets;
+
+class PetriNet {
+  val Place[*] places;
+  val Transition[*] transitionss;
+}
+
+@maple(condition="Simple", constraint="positiveTokens")
+@maple(condition="Bounded", constraint="positiveBound")
+@maple(condition="Simple and Bounded", constraint="boundedSimple")
+@maple(condition="Object and Bounded", constraint="boundedObject")
+@Ecore(constraints="positiveBound positiveTokens boundedSimple boundedObject")
+@"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"(positiveBound="self.bound>0", positiveTokens="self.tokens>=0", boundedSimple="self.tokens < self.bound", boundedObject="self.ctokens->size() < self.bound")
+class Place {
+
+  @maple(condition="Simple")
+  attr EBigInteger[1] tokens;
+
+  @maple(condition="Bounded")
+  attr EBigInteger[1] bound;
+
+  @maple(condition="Object")
+  val Token[*] ctokens;
+}
+
+@maple(condition="Object")
+class Token {
+}
+
+@maple(condition="Weight")
+abstract class Arc {
+
+  @maple(condition="Weight")
+  attr EBigInteger[1] weight;
+}
+
+@maple(condition="Weight")
+class ArcPT extends Arc {
+
+  @maple(condition="Weight")
+  ref Place[1] from;
+
+  @maple(condition="Weight")
+  ref Transition[1] to;
+}
+
+@maple(condition="Weight")
+class ArcTP extends Arc {
+
+  @maple(condition="Weight")
+  ref Transition[1] from;
+
+  @maple(condition="Weight")
+  ref Place[1] to;
+}
+
+class Transition {
+
+  @maple(condition="not Weight")
+  ref Place[*] ins;
+
+  @maple(condition="not Weight")
+  ref Place[*] outs;
+
+  @maple(condition="Inhibitor")
+  ref Place[*] inhibitors;
+
+  @maple(condition="Read")
+  ref Place[*] read;
+
+  @maple(condition="Priority")
+  attr double[1] priority;
+}
+

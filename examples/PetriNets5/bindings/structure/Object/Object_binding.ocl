@@ -1,0 +1,8 @@
+-- @presenceCondition = Object
+import 'http://www.petrinets.org/'
+
+package PetriNets
+context Place::tokens() : Integer  
+    body: self.ctokens->size()
+    
+endpackage

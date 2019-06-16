@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<configuration>
+		<feature automatic="selected" manual="undefined" name="Automata"/>
+		<feature automatic="selected" manual="undefined" name="Transitions"/>
+		<feature automatic="undefined" manual="undefined" name="Input"/>
+		<feature automatic="undefined" manual="undefined" name="Output"/>
+		<feature automatic="undefined" manual="undefined" name="Probability"/>
+		<feature automatic="undefined" manual="undefined" name="Deterministic"/>
+		<feature automatic="selected" manual="undefined" name="Memory"/>
+		<feature automatic="undefined" manual="undefined" name="Stack"/>
+		<feature automatic="selected" manual="undefined" name="States"/>
+		<feature automatic="undefined" manual="undefined" name="Initial"/>
+		<feature automatic="undefined" manual="undefined" name="Final"/>
+		<feature automatic="undefined" manual="undefined" name="Hierarchical"/>
+		<feature automatic="selected" manual="undefined" name="AcceptanceCondition"/>
+		<feature automatic="unselected" manual="undefined" name="Finite"/>
+		<feature automatic="unselected" manual="undefined" name="Infinite"/>
+		<feature automatic="undefined" manual="selected" name="Probabilistic"/>
+	</configuration>

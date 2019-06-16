@@ -1,0 +1,12 @@
+-- @presenceCondition = true
+import 'http://www.petrinets.org/'
+
+package PetriNets
+context PetriNet
+  def: pick(s : Transition) : Transition = s->any(true).oclAsType(Transition)
+context Transition
+  -- @merge and
+  def: enabled() : Boolean = self.ins()->forAll( p | p.tokens() > 0)
+  def: fire() : Boolean = self.ins()->forAll ( p | p.oclAsType(Place).modify(-1)) and 
+							self.outs()->forAll ( p | p.oclAsType(Place).modify(1))
+endpackage

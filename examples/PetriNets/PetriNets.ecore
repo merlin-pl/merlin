@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="PetriNets" nsURI="http://www.petrinets.org/" nsPrefix="ex">
+  <eAnnotations source="features">
+    <details key="file" value="model.xml"/>
+  </eAnnotations>
+  <eAnnotations source="http://www.eclipse.org/OCL/Import">
+    <details key="ecore" value="http://www.eclipse.org/emf/2002/Ecore"/>
+  </eAnnotations>
+  <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+    <details key="invocationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="PetriNet">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="places" ordered="false"
+        upperBound="-1" eType="#//Place" containment="true" eOpposite="#//Place/net"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="trans" ordered="false"
+        upperBound="-1" eType="#//Transition" containment="true" eOpposite="#//Transition/net"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="arcs" ordered="false" upperBound="-1"
+        eType="#//Arc" containment="true">
+      <eAnnotations source="presence">
+        <details key="condition" value="Weight"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Place">
+    <eAnnotations source="presence">
+      <details key="condition" value="Bounded"/>
+      <details key="constraint" value="boundedTokens"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="boundedTokens"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="boundedTokens" value="self.tokens() &lt;= self.bound"/>
+    </eAnnotations>
+    <eOperations name="tokens" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="net" lowerBound="1" eType="#//PetriNet"
+        eOpposite="#//PetriNet/places"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="itokens" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
+      <eAnnotations source="presence">
+        <details key="condition" value="Simple"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bound" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
+      <eAnnotations source="presence">
+        <details key="condition" value="Bounded"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ctokens" ordered="false"
+        upperBound="-1" eType="#//Token" containment="true">
+      <eAnnotations source="presence">
+        <details key="condition" value="Object"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Token">
+    <eAnnotations source="presence">
+      <details key="condition" value="Object"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Arc" abstract="true">
+    <eAnnotations source="presence">
+      <details key="condition" value="Weight"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="weight" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
+      <eAnnotations source="presence">
+        <details key="condition" value="Weight"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ArcPT" eSuperTypes="#//Arc">
+    <eAnnotations source="presence">
+      <details key="condition" value="Weight"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="from" lowerBound="1" eType="#//Place">
+      <eAnnotations source="presence">
+        <details key="condition" value="Weight"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="to" lowerBound="1" eType="#//Transition">
+      <eAnnotations source="presence">
+        <details key="condition" value="Weight"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ArcTP" eSuperTypes="#//Arc">
+    <eAnnotations source="presence">
+      <details key="condition" value="Weight"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="from" lowerBound="1" eType="#//Transition">
+      <eAnnotations source="presence">
+        <details key="condition" value="Weight"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="to" lowerBound="1" eType="#//Place">
+      <eAnnotations source="presence">
+        <details key="condition" value="Weight"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Transition">
+    <eOperations name="inputs" ordered="false" upperBound="-1" eType="#//Place">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="false"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="outputs" ordered="false" upperBound="-1" eType="#//Place">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="false"/>
+      </eAnnotations>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="net" lowerBound="1" eType="#//PetriNet"
+        eOpposite="#//PetriNet/trans"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ins" ordered="false" upperBound="-1"
+        eType="#//Place">
+      <eAnnotations source="presence">
+        <details key="condition" value="not Weight"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outs" ordered="false" upperBound="-1"
+        eType="#//Place">
+      <eAnnotations source="presence">
+        <details key="condition" value="not Weight"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inh" ordered="false" upperBound="-1"
+        eType="#//Place">
+      <eAnnotations source="presence">
+        <details key="condition" value="Inhibitor"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="read" ordered="false" upperBound="-1"
+        eType="#//Place">
+      <eAnnotations source="presence">
+        <details key="condition" value="Read"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reset" ordered="false"
+        upperBound="-1" eType="#//Place">
+      <eAnnotations source="presence">
+        <details key="condition" value="Reset"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="priority" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble">
+      <eAnnotations source="presence">
+        <details key="condition" value="Priority"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+</ecore:EPackage>

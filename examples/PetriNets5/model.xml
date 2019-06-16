@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel>
+		<properties/>
+		<struct>
+			<and mandatory="true" name="PetriNets">
+				<alt mandatory="true" name="Tokens">
+					<feature name="Simple"/>
+					<feature name="Object"/>
+				</alt>
+				<and mandatory="true" name="Arcs">
+					<feature name="Inhibitor"/>
+					<feature name="Read"/>
+				</and>
+				<feature name="Priority"/>
+				<feature name="Bounded"/>
+			</and>
+		</struct>
+		<constraints/>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true" Tautology="true"/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+    <feature automatic="selected" name="GraphAlgorithms"/>
+    <feature automatic="selected" name="Edges"/>
+    <feature automatic="selected" name="Direction"/>
+    <feature manual="selected" name="Directed"/>
+    <feature automatic="unselected" name="Undirected"/>
+    <feature automatic="selected" name="Nodes"/>
+    <feature automatic="selected" name="Search"/>
+    <feature manual="selected" name="DepthFirst"/>
+    <feature automatic="unselected" name="BreadthFirst"/>
+    <feature automatic="unselected" name="None"/>
+</configuration>

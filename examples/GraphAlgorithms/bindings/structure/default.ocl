@@ -1,0 +1,11 @@
+-- @presenceCondition = true
+import 'http://Graphs/PL'
+
+package graphs
+context Graph
+
+   def: nodes() : Set(Node) = 
+    self.nodes->asSet()
+   def: edges() : Set(Edge) = 
+    self.edges->asSet()
+endpackage

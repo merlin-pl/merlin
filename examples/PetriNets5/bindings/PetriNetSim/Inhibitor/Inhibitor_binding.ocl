@@ -1,0 +1,11 @@
+-- @concept = 'concept/PetriNetsSimulationConcept.ecore'
+-- @presenceCondition = Inhibitor and Bounded
+import 'http://www.petrinets.org/'
+
+package PetriNets
+context Transition
+   -- @Merge and
+   def: enabled() : Boolean =
+       self.inh->forAll( p | p.tokens() = 0 )
+    
+endpackage

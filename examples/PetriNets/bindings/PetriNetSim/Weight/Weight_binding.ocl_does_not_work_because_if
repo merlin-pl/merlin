@@ -1,0 +1,22 @@
+-- @concept = 'concept/PetriNetsSimulationConcept.ecore'
+-- @presenceCondition = Weight
+import 'http://www.petrinets.org/'
+
+package PetriNets
+context Transition
+
+   def: inWeight(p : Place) : Integer =
+     if (not self.inputs()->includes(p)) then 
+     	0 
+     else
+     	ArcPT.allInstances()->select(a | a.from = p and a.to = self)->first().weight
+     endif
+    
+    def: outWeight(p : Place) : Integer =
+     if (not self.outputs()->includes(p)) then 
+     	0 
+     else
+     	ArcTP.allInstances()->select(a | a.from = self and a.to = p)->first().weight
+     endif 
+    
+endpackage

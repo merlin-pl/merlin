@@ -1,0 +1,3 @@
+operation Graph calculateFollowers(idx : Integer) {
+   self.~toVisit.addAll(self.nodes());   
+}

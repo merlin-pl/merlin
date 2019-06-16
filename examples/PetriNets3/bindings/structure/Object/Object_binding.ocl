@@ -1,0 +1,9 @@
+-- @presenceCondition = Object
+import 'http://www.petrinets.org/'
+
+package PetriNets
+
+context Place
+   def: tokens() : Integer = self.tokens->size()
+    
+endpackage

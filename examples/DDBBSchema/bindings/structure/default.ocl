@@ -1,0 +1,21 @@
+-- @presenceCondition = true
+import 'http://RelationalDDBB/PL'
+
+package rdpl
+context Schema
+
+   def: name() : String = 
+    self.name
+   def: tables() : Set(Table) = 
+    self.tables->asSet()
+context Table
+
+   def: name() : String = 
+    self.name
+   def: columns() : Set(Column) = 
+    self.columns->asSet()
+context Column
+
+   def: name() : String = 
+    self.name
+endpackage

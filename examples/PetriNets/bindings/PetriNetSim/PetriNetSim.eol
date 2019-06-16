@@ -1,0 +1,29 @@
+-- @concept = "PetriNetsSimulationConcept.ecore"
+
+PetriNet.all()->first().simulate();
+
+operation PetriNet simulate() {
+	('Starting the simulation').println();
+	var step : Integer = 0;
+	var max : Integer = 100;
+	var end : Boolean = false;
+	while(not end) {
+		('STEP '+step+'. State = '+self.state()).println();
+		step = step + 1;
+		end = step >= max or not self.step();
+	}
+	('Simulation ended in state '+self.state()).println();
+}
+
+operation PetriNet step() : Boolean {
+   var enabled = self.trans()->select(t|t.oclAsType(Transition).enabled())->asSet(); 
+   if (enabled->isEmpty()) return false;
+   else return self.pick(enabled).fire() ;
+}
+
+operation PetriNet state() : String {
+    var result : String = '[';
+    for (p in self.places()) 
+      result += p.tokens()+" ";
+    return result+"]";
+}

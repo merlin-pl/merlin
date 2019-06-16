@@ -1,0 +1,5 @@
+rule TaskToPlace 
+  transform t : PM!Task
+  to p : PN!Place {
+	p.tokens = 0;  
+}

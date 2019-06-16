@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<configuration>
+		<feature automatic="selected" manual="undefined" name="GraphAlgorithms"/>
+		<feature automatic="selected" manual="undefined" name="Edges"/>
+		<feature automatic="selected" manual="undefined" name="Direction"/>
+		<feature automatic="undefined" manual="selected" name="Directed"/>
+		<feature automatic="unselected" manual="undefined" name="Undirected"/>
+		<feature automatic="undefined" manual="undefined" name="Weights"/>
+		<feature automatic="undefined" manual="unselected" name="Hyperedges"/>
+		<feature automatic="undefined" manual="undefined" name="Parallel"/>
+		<feature automatic="selected" manual="undefined" name="Nodes"/>
+		<feature automatic="undefined" manual="undefined" name="Hierarchy"/>
+		<feature automatic="undefined" manual="undefined" name="Identified"/>
+		<feature automatic="selected" manual="undefined" name="Search"/>
+		<feature automatic="undefined" manual="undefined" name="DepthFirst"/>
+		<feature automatic="undefined" manual="undefined" name="BreadthFirst"/>
+		<feature automatic="undefined" manual="undefined" name="None"/>
+	</configuration>

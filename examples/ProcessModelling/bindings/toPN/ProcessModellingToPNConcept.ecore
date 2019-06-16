@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    name="processModels2PN" nsURI="http://ProcessModelling/conceptTrafo"
+    nsPrefix="toPN">
+  <eAnnotations source="transformation">
+    <details key="technology" value="ETL"/>
+    <details key="name" value="PM2PN.etl"/>
+  </eAnnotations>
+  <eAnnotations source="http://www.eclipse.org/OCL/Import">
+    <details key="ecore" value="http://www.eclipse.org/emf/2002/Ecore"/>
+    <details key="gpl" value="../structure/ProcessModellingConcept.ecore#/"/>
+  </eAnnotations>
+</ecore:EPackage>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="rdpl_genSQL" nsURI="http://RelationalDDBB/PLconceptGenMySQL"
+    nsPrefix="rdpl_sql">
+  <eAnnotations source="transformation">
+    <details key="technology" value="EGL"/>
+    <details key="name" value="MySQLGenerator.egl"/>
+  </eAnnotations>
+  <eAnnotations source="http://www.eclipse.org/OCL/Import">
+    <details key="rdpl" value="../structure/RelationalDDBBConcept.ecore#/"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="Column" eSuperTypes="../structure/RelationalDDBBConcept.ecore#//Column">
+    <eOperations name="toStringCol" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+</ecore:EPackage>

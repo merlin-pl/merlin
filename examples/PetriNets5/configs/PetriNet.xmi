@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ex:PetriNet xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ex="http://www.petrinets.org/default">
+  <places>
+    <ctokens/>
+    <ctokens/>
+  </places>
+  <places bound="1"/>
+  <transitions/>
+  <arcs xsi:type="ex:ArcPT" weight="1" from="//@places.0" to="//@transitions.0"/>
+  <arcs xsi:type="ex:ArcTP" weight="2" from="//@transitions.0" to="//@places.1"/>
+</ex:PetriNet>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="PetriNetSim" nsURI="http://www.petrinets.org/conceptsim" nsPrefix="sim">
+  <eAnnotations source="transformation">
+    <details key="technology" value="EOL"/>
+    <details key="name" value="PetriNetSim.eol"/>
+  </eAnnotations>
+  <eAnnotations source="http://www.eclipse.org/OCL/Import">
+    <details key="ecore" value="http://www.eclipse.org/emf/2002/Ecore"/>
+    <details key="ex" value="../structure/PetriNetsConcept.ecore#/"/>
+  </eAnnotations>
+  <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+    <details key="invocationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="PetriNet" eSuperTypes="../structure/PetriNetsConcept.ecore#//PetriNet">
+    <eOperations name="simulate">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="post_nonEnabledTransitions" value="self.trans()->select(t | t.oclAsType(Transition).enabled())->isEmpty()"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="pick" lowerBound="1" eType="#//Transition">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="pre_someTransition" value="s->size()>0"/>
+        <details key="post_coherentChoice" value="s->includes(pick(s))"/>
+      </eAnnotations>
+      <eParameters name="s" ordered="false" upperBound="-1" eType="ecore:EClass ../structure/PetriNetsConcept.ecore#//Transition"/>
+    </eOperations>
+    <eOperations name="step" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="post_tokChange" value="self.places()->exists(p | p@pre.oclAsType(Place).tokens() &lt;> p.tokens())"/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Place" eSuperTypes="../structure/PetriNetsConcept.ecore#//Place">
+    <eOperations name="modify" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="post_retTrue" value="true"/>
+        <details key="post_tokChange" value="self.tokens()@pre+t = self.tokens()"/>
+      </eAnnotations>
+      <eParameters name="t" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBigInteger"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Transition" eSuperTypes="../structure/PetriNetsConcept.ecore#//Transition">
+    <eOperations name="enabled" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="post_enabledCondition" value="(self.enabled() implies self.ins()->forAll(p | p.tokens() > 0)) and (not self.enabled() implies self.ins()->exists(p | p.tokens() = 0))"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="fire" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="post_inTokenChange" value="self.ins()->forAll(p | p@pre.tokens() &lt; p.tokens())"/>
+        <details key="post_outTokenChange" value="self.outs()->forAll(p | p@pre.tokens() > p.tokens())"/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers>
+</ecore:EPackage>

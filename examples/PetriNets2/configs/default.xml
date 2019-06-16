@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+    <feature automatic="selected" name="PetriNet"/>
+    <feature automatic="selected" name="Tokens"/>
+    <feature manual="selected" name="Simple"/>
+    <feature automatic="unselected" name="Object"/>
+</configuration>

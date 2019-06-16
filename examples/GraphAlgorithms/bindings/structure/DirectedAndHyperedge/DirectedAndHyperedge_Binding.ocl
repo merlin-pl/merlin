@@ -1,0 +1,22 @@
+-- @presenceCondition = Directed and Hyperedges 
+import 'http://Graphs/PL'
+
+package graphs
+
+context Node
+
+def: outputs() : Set(Node) =
+		Edge.allInstances()->
+			select( e | e.src->asSet()->includes(self) )->
+			collect(e | e.tar )->
+			flatten()->
+			asSet()
+
+def: inputs() : Set(Node) =
+		Edge.allInstances()->
+			select( e | e.tar->asSet()->includes(self) )->
+			collect(e | e.src )->
+			flatten()->
+			asSet()
+
+endpackage

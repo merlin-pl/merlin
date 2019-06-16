@@ -1,0 +1,11 @@
+-- @concept = 'concept/PetriNetsSimulationConcept.ecore'
+-- @presenceCondition = Priority
+import 'http://www.petrinets.org/'
+
+package PetriNets
+context PetriNet
+
+   def: pick(s : Set(Transition)) : Transition  =
+     self.trans()->select( t1 | not self.trans()->exists( t2 | t2.priority > t1.priority ))->any(true)
+    
+endpackage
