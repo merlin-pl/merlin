@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<featureModel>
+    <properties/>
+    <struct>
+        <and abstract="true" mandatory="true" name="BaseADL">
+            <feature name="Autoconnect"/>
+            <feature name="Replication"/>
+            <feature name="Encryption"/>
+            <or name="ComponentBehaviour">
+                <feature name="StructuredTextBehaviour"/>
+                <and name="InputOutputAutomata">
+                    <feature mandatory="true" name="JavaExpression"/>
+                </and>
+            </or>
+        </and>
+    </struct>
+    <constraints>
+        <rule>
+            <not>
+                <conj>
+                    <var>Autoconnect</var>
+                    <var>Replication</var>
+                </conj>
+            </not>
+        </rule>
+    </constraints>
+    <calculations Auto="true" Constraints="true" Features="true" Redundant="true" Tautology="true"/>
+    <comments/>
+    <featureOrder userDefined="false"/>
+</featureModel>

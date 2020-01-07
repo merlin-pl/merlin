@@ -11,6 +11,7 @@ import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcoreFactory;
 
 import de.ovgu.featureide.fm.core.configuration.Configuration;
 import merlin.common.annotations.MerlinAnnotationStructure;
@@ -104,6 +105,17 @@ public class MerlinAnnotationUtils {
 			}		
 		}
 		return "true";	// Should be cls.presenceCondition
+	}
+	
+	public static boolean setInvariantPresenceCondition(EClass cls, String invName, String pc) {
+		if (cls == null || cls.getEAnnotations() == null)  
+			return false;
+		EAnnotation an = EcoreFactory.eINSTANCE.createEAnnotation();
+		an.setSource(MerlinAnnotationStructure.ANNOTATION_NAME);
+		an.getDetails().put(MerlinAnnotationStructure.INVARIANT, invName);
+		an.getDetails().put(MerlinAnnotationStructure.PRESENCE_CONDITION, pc);
+		cls.getEAnnotations().add(an);
+		return true;
 	}
 	
 	public static List<EAnnotation> getModifiers (ENamedElement ne) {			

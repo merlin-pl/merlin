@@ -86,13 +86,13 @@ public class SemanticCompiler {
 	/**
 	 * It extends a metamodel to make explicit the feature model and its constraints.
 	 * @param allowPartialConfigurations false to generate total configurations (by default), true to generate partial configurations
-	 * @param heuristics compilation strategy to be used when allowPartialConfigurations=true
+	 * @param strategy compilation strategy to be used when allowPartialConfigurations=true
 	 * @param illustrateFeatures false to generate random instances (by default), true to generate instances that exercise the selected features
 	 */
 	public List<EPackage> compile () { return compile(false, null, false); }
 	public List<EPackage> compile (boolean allowPartialConfigurations, CompilationStrategy strategy, boolean illustrateFeatures) {
 		this.allowPartialConfigurations = allowPartialConfigurations;
-		this.strategy = strategy!=null? strategy : CompilationStrategy.min; 
+		this.strategy = strategy==null || this.allowPartialConfigurations==false? CompilationStrategy.min : strategy; 
 		
 		if (ecore!=null) {
 			this.metamodel = EMFUtils.readEcore(ecore);
@@ -149,9 +149,27 @@ public class SemanticCompiler {
 					}					
 					// ... handle its presence condition and modifiers
 					handleAnnotations((EClass)aclass, metamodel, fmClass, spClass, illustrateFeatures, forceMinStrategy);
-					// ... its invariants must be evaluated only when their presence condition is satisfied
+					// ... handle presence conditions and modifiers of its features
+					for (EStructuralFeature feature : ((EClass)aclass).getEStructuralFeatures()) 
+						handleAnnotations(feature, fmClass); // presence condition, min, max				
+				}
+			}
+			// ... handle containment modifier of references
+			handleAnnotations(metamodel);
+		}
+		
+		// ... invariants must be evaluated only when their presence condition is satisfied
+		// ... and do not apply to the instances of subclasses added/removed through extend/reduces modifiers  
+		//     (this must be done in a second pass)
+		for (EPackage pack : metamodel) {
+			for (EClassifier aclass : pack.getEClassifiers()) {
+				if (aclass instanceof EClass) {
+					EAnnotation clOcl = EMFUtils.getOCLAnnotation(aclass);
 					EMap<String, String> invariants = EMFUtils.getInvariants(aclass);
 					for (String inv : invariants.keySet()) {
+						// modify invariant to forbid its application to subclasses added/removed through extend/reduces modifiers 
+						applyFilter((EClass)aclass, inv); 
+						// modify invariant to forbid its application when the PC is not satisfied
 						String presenceCondition = rewrite(MerlinAnnotationUtils.getInvariantPresenceCondition((EClass)aclass, inv));
 						if (!presenceCondition.equals("true")) {
 							String oldInvariant = invariants.get(inv);
@@ -164,14 +182,10 @@ public class SemanticCompiler {
 							clOcl.getDetails().put(inv, newInvariant);
 						}
 					}
-					// ... handle presence conditions and modifiers of its features
-					for (EStructuralFeature feature : ((EClass)aclass).getEStructuralFeatures()) 
-						handleAnnotations(feature, fmClass); // presence condition, min, max				
 				}
 			}
-			// ... handle containment modifier of references
-			handleAnnotations(metamodel);
 		}
+		
 		// ... adapt OCL expressions for features that changed from monovalued to multivalued
 		handleOcl(metamodel);
 
@@ -288,6 +302,7 @@ public class SemanticCompiler {
 	 *    c.3) for each reference with type=supertype (or higher), add invariant to reference.src forbidding objects of the child class when the modifier condition is not met
 	 *    c.4) rewrite OCL expressions "supertype(or higher).allInstances..." to exclude objects of the child class when the modifier condition is not met
 	 *    c.5) rewrite OCL expressions "oclIsKindOf(supertype(or higher))..." to make it false for the child class when the modifier condition is not met
+	 *    c.6) for each inherited invariant, add duplicate with PC = "invariant-pc and condition" to class, and do not apply original invariant to the instances of the class 
 	 * 
 	 * d) For each modifier reduce="supertype", do steps c.2 to c.5 but checking if the modifier condition is met (instead of not met)
 	 * 
@@ -334,10 +349,10 @@ public class SemanticCompiler {
 			String invariant = emptyCondition;
 			if (!presenceCondition.equals("true")) {
 				if (!allowPartialConfigurations)
-					 invariant = "if " + negate(presenceCondition) + " then " + empty(aclass) + " else " + emptyCondition + " endif";
+					 invariant = "if " + not(presenceCondition) + " then " + empty(aclass) + " else " + emptyCondition + " endif";
 				else if (strategy == CompilationStrategy.max && !forceMinStrategy.contains(aclass))
-					 invariant = "if " + undefined(presenceCondition) + " then true else if " + negate(presenceCondition) + " then " + empty(aclass, true) + " else true endif endif";
-				else invariant = "if " + undefined(presenceCondition) + " then " + empty(aclass, true) + " else if " + negate(presenceCondition) + " then " + empty(aclass, true) + " else " + emptyCondition + " endif endif";
+					 invariant = "if " + undefined(presenceCondition) + " then true else if " + not(presenceCondition) + " then " + empty(aclass, true) + " else true endif endif";
+				else invariant = "if " + undefined(presenceCondition) + " then " + empty(aclass, true) + " else if " + not(presenceCondition) + " then " + empty(aclass, true) + " else " + emptyCondition + " endif endif";
 			}
 			fmOcl.getDetails().put(aclass.getName() + "_presence_condition", invariant);			
 		}
@@ -365,7 +380,7 @@ public class SemanticCompiler {
 				if ((supertype = EMFUtils.getEClass(metamodel, reduceSupertype)) != null) {
 					if (!supertypes.containsKey(supertype)) 
 						supertypes.put(supertype, new ArrayList<String>());
-					supertypes.get(supertype).add(negate(condition));
+					supertypes.get(supertype).add(not(condition));
 				}
 			}
 		}
@@ -390,7 +405,7 @@ public class SemanticCompiler {
 						emptyfeatures.add(empty(feature));
 					}
 				}
-				String premise      = negate(join(supertypes.get(supertype), "or"));
+				String premise      = not(join(supertypes.get(supertype), "or"));
 				String consequences = join(emptyfeatures, "and");				
 				if (!consequences.equals("()")) {
 					String invariant = "";
@@ -430,6 +445,24 @@ public class SemanticCompiler {
 						}
 					}
 				}
+				
+				// c.6a: add copy of each inherited invariant to the class; set its PC to "invariant-pc and condition"
+				List<EClass> ancestors = new ArrayList<>();
+				ancestors.add(supertype);
+				ancestors.addAll(supertype.getEAllSuperTypes());
+				for (EClass anc : ancestors) {
+					EMap<String, String> ancInvariants = EMFUtils.getInvariants(anc);
+					for (String ancInvariantName : ancInvariants.keySet()) {
+						String ancInvariantPC   = MerlinAnnotationUtils.getInvariantPresenceCondition(anc, ancInvariantName);
+						String ancInvariant     = ancInvariants.get(ancInvariantName);
+						String newInvariantName = ancInvariantName + "_inherited_from_" + anc.getName();
+						for (int i=0; clOcl.getDetails().containsKey(newInvariantName); i++,newInvariantName=ancInvariantName+i);						
+						clOcl.getDetails().put(newInvariantName, ancInvariant);
+						MerlinAnnotationUtils.setInvariantPresenceCondition(aclass, newInvariantName, and(ancInvariantPC, join(supertypes.get(supertype), "or")));
+				// c.6b: forbid applying the original invariant to the objects of the class
+						setFilter(anc, ancInvariantName, aclass);
+					}
+				}				
 			}
 
 			// c.4:  rewrite "supertype.allInstances..." to exclude the instances of the class when condition=false
@@ -532,7 +565,7 @@ public class SemanticCompiler {
 				for (EStructuralFeature feature : reduceSupertype.getEStructuralFeatures())
 					fmOcl.getDetails().put(
 						aclass.getName() + "_" + feature.getName() + "_illustrate", 
-						"(" + negate(condition) + ") implies " + aclass.getName() + ".allInstances()->exists(o | " + bigger("o", feature, 1) + ")"); // feature.size()>0
+						"(" + not(condition) + ") implies " + aclass.getName() + ".allInstances()->exists(o | " + bigger("o", feature, 1) + ")"); // feature.size()>0
 			}
 		}
 	}
@@ -584,12 +617,12 @@ public class SemanticCompiler {
 		terms.addAll(minModifiers.values());
 		terms.addAll(maxModifiers.values());
 		// min
-		if (!minModifiers.isEmpty())          terms.add(undefined_or(join(minModifiers.keySet(), "or")) + negate(join(minModifiers.keySet(), "or")) + " implies " + bigger(feature, feature.getLowerBound()));
+		if (!minModifiers.isEmpty())          terms.add(undefined_or(join(minModifiers.keySet(), "or")) + not(join(minModifiers.keySet(), "or")) + " implies " + bigger(feature, feature.getLowerBound()));
 		else if (feature.getLowerBound() > 0) terms.add(bigger(feature, feature.getLowerBound()));
 		// max
 		if (feature.getUpperBound() != -1) {
 			if (!maxModifiers.isEmpty())
-				terms.add(undefined_or(join(maxModifiers.keySet(), "or")) + negate(join(maxModifiers.keySet(), "or")) + " implies " + smaller(feature, feature.getUpperBound()));
+				terms.add(undefined_or(join(maxModifiers.keySet(), "or")) + not(join(maxModifiers.keySet(), "or")) + " implies " + smaller(feature, feature.getUpperBound()));
 			else terms.add(smaller(feature, feature.getUpperBound())); 
 		}		
 		String modifiers = terms.isEmpty()? "true" : join(terms, "and");
@@ -597,10 +630,13 @@ public class SemanticCompiler {
 		// create invariant taking into account presence condition and modifiers ............................
 		if (!presenceCondition.equals("true") || /*!modifiers.equals("true") ||*/ !minModifiers.isEmpty() || !maxModifiers.isEmpty()) {
 			String invariant = modifiers;
-			if (!presenceCondition.equals("true"))
-				invariant = strategy == CompilationStrategy.max?
-						    "if " + undefined(presenceCondition) + " then " + modifiers + " else if " + negate(presenceCondition) + " then " + modifiers + " else true endif endif" :
-							"if " + undefined(presenceCondition) + " then " + empty(feature) + " and " + modifiers + " else if " + negate(presenceCondition) + " then " + empty(feature) + " else " + modifiers + " endif endif" ;
+			if (!presenceCondition.equals("true")) {
+				if (!allowPartialConfigurations)
+					 invariant = "if " + not(presenceCondition) + " then " + empty(feature) + " else " + modifiers + " endif";
+				else if (this.strategy == CompilationStrategy.max) 
+					 invariant = "if " + undefined(presenceCondition) + " then " + modifiers + " else if " + not(presenceCondition) + " then " + modifiers + " else true endif endif";
+				else invariant = "if " + undefined(presenceCondition) + " then " + and(empty(feature), modifiers) + " else if " + not(presenceCondition) + " then " + empty(feature) + " else " + modifiers + " endif endif" ;
+			}
 			clOcl.getDetails().put(feature.getName() + "_presence_condition", invariant);
 		}
 		
@@ -849,8 +885,33 @@ public class SemanticCompiler {
 		}
 		return formula; 
 	}
-	protected String negate (String condition) {
+	protected String not (String condition) {
 		return condition.startsWith("not ")? condition.substring(4) : "not (" + condition + ")";
+	}
+	protected String and (String condition1, String condition2) {
+		return condition1.equals("true")? condition2 : (condition2.equals("true")? condition1 : "(" + condition1 + " and " + condition2 + ")");
+	}
+	
+	// methods to define/apply class-filters in invariants, i.e., classes where the invariants do not apply
+	protected void setFilter(EClass invariantOwner, String invariantName, EClass filter) {
+		EAnnotation an = EcoreFactory.eINSTANCE.createEAnnotation();
+		an.setSource("ExcludedClasses");
+		an.getDetails().put(MerlinAnnotationStructure.INVARIANT, invariantName);
+		an.getDetails().put(MerlinAnnotationStructure.PRESENCE_CONDITION, "not oclIsKindOf("+filter.getName()+")");
+		invariantOwner.getEAnnotations().add(an);
+	}
+	protected void applyFilter(EClass invariantOwner, String invariantName) {
+		List<String> filter = new ArrayList<>();
+		for (EAnnotation an : invariantOwner.getEAnnotations()) { 
+			if (an.getSource().equals("ExcludedClasses")) 		
+				if (invariantName.equals(an.getDetails().get(MerlinAnnotationStructure.INVARIANT))) 
+					filter.add(an.getDetails().get(MerlinAnnotationStructure.PRESENCE_CONDITION));
+		}
+		if (!filter.isEmpty()) {
+			String filterExpression = join(filter, "and");
+			EAnnotation invariants = EMFUtils.getOCLAnnotation(invariantOwner);
+			invariants.getDetails().put(invariantName, filterExpression + " implies " + invariants.getDetails().get(invariantName));
+		}
 	}
 	
 	// ----------------------------------------------------------------------------------
